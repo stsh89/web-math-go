@@ -5,13 +5,16 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/stsh89/web-math-go/app"
 	"github.com/stsh89/web-math-go/equations"
+	"github.com/stsh89/web-math-go/providers/notion"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+	config := buildConfig()
 
 	r := gin.Default()
 
@@ -26,9 +29,18 @@ func main() {
 
 	r.GET("/equations", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"Equations": equations.ListEquations(logger),
+			"Equations": equations.ListEquations(logger, &config),
 		})
 	})
 
 	r.Run()
+}
+
+func buildConfig() app.Config {
+	return app.Config{
+		NotionConfig: &notion.Configuration{
+			ApiKey:     os.Getenv("NOTION_API_KEY"),
+			DatabaseId: os.Getenv("NOTION_DATABASE_ID"),
+		},
+	}
 }
