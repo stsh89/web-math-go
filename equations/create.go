@@ -30,7 +30,13 @@ func (l *EquationsCreator) Save(term string) string {
 		Logger:        l.Logger,
 	}
 
-	return client.CreatePage(term)
+	id := client.SearchPage(term)
+
+	if id == "" {
+		return client.CreatePage(term)
+	} else {
+		return id
+	}
 }
 
 func CreateEquation(term string, logger *slog.Logger, config *app.Config) string {
