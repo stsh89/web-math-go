@@ -22,8 +22,7 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{
 			"List all equations": "GET /equations",
 			"Create equation":    "POST /equations",
-			"Find equation":      "GET /equations/:id",
-			"Delete equation":    "DELETE /equations/:id",
+			"Delete equation":    "DELETE /equations",
 		})
 	})
 
@@ -42,6 +41,18 @@ func main() {
 
 		c.JSON(http.StatusOK, gin.H{
 			"ID": equations.CreateEquation(json.Term, logger, &config),
+		})
+	})
+
+	r.DELETE("/equations", func(c *gin.Context) {
+		var json struct {
+			Term string `json:"term" binding:"required"`
+		}
+
+		c.Bind(&json)
+
+		c.JSON(http.StatusOK, gin.H{
+			"ID": equations.DeleteEquation(json.Term, logger, &config),
 		})
 	})
 

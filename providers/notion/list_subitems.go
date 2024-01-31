@@ -1,7 +1,6 @@
 package notion
 
 import (
-	"github.com/go-resty/resty/v2"
 	"github.com/tidwall/gjson"
 )
 
@@ -16,13 +15,9 @@ type ListResultProperties struct {
 }
 
 func (c *Client) ListSubitems() []ListResult {
-	client := resty.New()
-	client.SetBaseURL("https://api.notion.com/v1/databases/")
-	client.SetHeader("Accept", "application/json")
-	client.SetHeader("Notion-Version", "2022-06-28")
-	client.SetAuthToken(c.Configuration.ApiKey)
+	inner := c.Inner()
 
-	resp, err := client.R().Post(c.Configuration.DatabaseId + "/query")
+	resp, err := inner.R().Post("databases/" + c.Configuration.DatabaseId + "/query")
 
 	if err != nil {
 		c.Logger.Error(err.Error())
