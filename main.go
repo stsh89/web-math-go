@@ -33,6 +33,18 @@ func main() {
 		})
 	})
 
+	r.POST("/equations", func(c *gin.Context) {
+		var json struct {
+			Term string `json:"term" binding:"required"`
+		}
+
+		c.Bind(&json)
+
+		c.JSON(http.StatusOK, gin.H{
+			"ID": equations.CreateEquation(json.Term, logger, &config),
+		})
+	})
+
 	r.Run()
 }
 
