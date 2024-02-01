@@ -5,11 +5,12 @@ go 1.21.6
 require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-resty/resty/v2 v2.11.0
-	github.com/stsh89/math-go v0.0.6
+	github.com/stsh89/math-go v0.0.7
 	github.com/tidwall/gjson v1.17.0
 )
 
 require (
+	github.com/Pramod-Devireddy/go-exprtk v1.1.0 // indirect
 	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect

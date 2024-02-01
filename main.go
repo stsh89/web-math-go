@@ -23,6 +23,7 @@ func main() {
 			"List all equations": "GET /equations",
 			"Create equation":    "POST /equations",
 			"Delete equation":    "DELETE /equations",
+			"Get points for given equation on a range from -5 to 5": "GET /calculate",
 		})
 	})
 
@@ -53,6 +54,21 @@ func main() {
 
 		c.JSON(http.StatusOK, gin.H{
 			"ID": equations.DeleteEquation(json.Term, logger, &config),
+		})
+	})
+
+	r.POST("/calculate", func(c *gin.Context) {
+		var json struct {
+			Term string             `json:"term" binding:"required"`
+			Args map[string]float64 `json:"args" binding:"required"`
+		}
+
+		c.Bind(&json)
+
+		points := equations.Calculate(json.Term, json.Args, logger, &config)
+
+		c.JSON(http.StatusOK, gin.H{
+			"points": points,
 		})
 	})
 
