@@ -8,6 +8,7 @@ For now only simple cases of math equations are supported, for example
     y=x+5+a, etc
 
 Currently supported functionalities:
+
     * Basic CRUD operations for storing/removing equations inside Notion database
     * Calculate equation on a range from -5 to 5
 
